@@ -26,9 +26,9 @@ void            func_storage_error(torrent::ChunkList* chunk_list, const std::st
   torrent::ChunkManager* chunk_manager = new torrent::ChunkManager;     \
   torrent::ChunkList* chunk_list = new torrent::ChunkList;              \
   chunk_list->set_manager(chunk_manager);                               \
-  chunk_list->slot_create_chunk() = tr1::bind(&func_create_chunk, tr1::placeholders::_1, tr1::placeholders::_2); \
-  chunk_list->slot_free_diskspace() = tr1::bind(&func_free_diskspace, chunk_list); \
-  chunk_list->slot_storage_error() = tr1::bind(&func_storage_error, chunk_list, tr1::placeholders::_1); \
+  chunk_list->slot_create_chunk() = bind(&func_create_chunk, placeholders::_1, placeholders::_2); \
+  chunk_list->slot_free_diskspace() = bind(&func_free_diskspace, chunk_list); \
+  chunk_list->slot_storage_error() = bind(&func_storage_error, chunk_list, placeholders::_1); \
   chunk_list->set_chunk_size(1 << 16);                                  \
   chunk_list->resize(32);
 

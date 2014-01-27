@@ -37,7 +37,7 @@
 #ifndef LIBTORRENT_UTILS_EXTENTS_H
 #define LIBTORRENT_UTILS_EXTENTS_H
 
-#include <tr1/array>
+#include <array>
 
 namespace torrent {
 
@@ -48,7 +48,7 @@ struct extents_base {
   typedef std::pair<extents_base*, Tp> mapped_type;
   typedef Tp                           mapped_value_type;
 
-  typedef std::tr1::array<mapped_type, TableSize> table_type;
+  typedef std::array<mapped_type, TableSize> table_type;
   
   extents_base(key_type pos, unsigned int mb, mapped_value_type val) :
     mask_bits(mb), position(pos) { table.assign(mapped_type(NULL, mapped_value_type())); }

@@ -78,16 +78,16 @@ public:
   int enabled_counter = 0;                                              \
   int disabled_counter = 0;                                             \
                                                                         \
-  tracker_controller.slot_success() = tr1::bind(&increment_value, &success_counter); \
-  tracker_controller.slot_failure() = tr1::bind(&increment_value, &failure_counter); \
-  tracker_controller.slot_timeout() = tr1::bind(&increment_value, &timeout_counter); \
-  tracker_controller.slot_tracker_enabled() = tr1::bind(&increment_value, &enabled_counter); \
-  tracker_controller.slot_tracker_disabled() = tr1::bind(&increment_value, &disabled_counter); \
+  tracker_controller.slot_success() = bind(&increment_value, &success_counter); \
+  tracker_controller.slot_failure() = bind(&increment_value, &failure_counter); \
+  tracker_controller.slot_timeout() = bind(&increment_value, &timeout_counter); \
+  tracker_controller.slot_tracker_enabled() = bind(&increment_value, &enabled_counter); \
+  tracker_controller.slot_tracker_disabled() = bind(&increment_value, &disabled_counter); \
                                                                         \
-  tracker_list.slot_success() = tr1::bind(&torrent::TrackerController::receive_success, &tracker_controller, tr1::placeholders::_1, tr1::placeholders::_2); \
-  tracker_list.slot_failure() = tr1::bind(&torrent::TrackerController::receive_failure, &tracker_controller, tr1::placeholders::_1, tr1::placeholders::_2); \
-  tracker_list.slot_tracker_enabled()  = tr1::bind(&torrent::TrackerController::receive_tracker_enabled, &tracker_controller, tr1::placeholders::_1); \
-  tracker_list.slot_tracker_disabled() = tr1::bind(&torrent::TrackerController::receive_tracker_disabled, &tracker_controller, tr1::placeholders::_1);
+  tracker_list.slot_success() = bind(&torrent::TrackerController::receive_success, &tracker_controller, placeholders::_1, placeholders::_2); \
+  tracker_list.slot_failure() = bind(&torrent::TrackerController::receive_failure, &tracker_controller, placeholders::_1, placeholders::_2); \
+  tracker_list.slot_tracker_enabled()  = bind(&torrent::TrackerController::receive_tracker_enabled, &tracker_controller, placeholders::_1); \
+  tracker_list.slot_tracker_disabled() = bind(&torrent::TrackerController::receive_tracker_disabled, &tracker_controller, placeholders::_1);
 
 #define TEST_SINGLE_BEGIN()                                             \
   TRACKER_CONTROLLER_SETUP();                                           \

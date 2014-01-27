@@ -37,7 +37,7 @@
 #ifndef LIBTORRENT_UTILS_SIGNAL_BITFIELD_H
 #define LIBTORRENT_UTILS_SIGNAL_BITFIELD_H
 
-#include <tr1/functional>
+#include <functional>
 #include <torrent/common.h>
 
 namespace torrent {
@@ -45,7 +45,7 @@ namespace torrent {
 class LIBTORRENT_EXPORT lt_cacheline_aligned signal_bitfield {
 public:
   typedef uint32_t                    bitfield_type;
-  typedef std::tr1::function<void ()> slot_type;
+  typedef std::function<void ()> slot_type;
   
   static const unsigned int max_size = 32;
 

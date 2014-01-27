@@ -360,7 +360,7 @@ AC_DEFUN([TORRENT_CHECK_TR1], [
   AC_MSG_CHECKING(for TR1 support)
 
   AC_COMPILE_IFELSE([AC_LANG_SOURCE([
-      #include <tr1/unordered_map>
+      #include <unordered_map>
       class Foo;
       typedef std::tr1::unordered_map<Foo*, int> Bar;
       ])],

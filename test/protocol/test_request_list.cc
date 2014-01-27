@@ -28,12 +28,12 @@ transfer_list_void() {
 // Move to support header:
 #define SETUP_DELEGATOR()                                               \
   torrent::Delegator delegator;                                         \
-  delegator.slot_chunk_find() = std::tr1::bind(&find_peer_chunk, std::tr1::placeholders::_1, std::tr1::placeholders::_2); \
-  delegator.slot_chunk_size() = std::tr1::bind(&chunk_index_size, std::tr1::placeholders::_1); \
-  delegator.transfer_list()->slot_canceled()  = std::tr1::bind(&transfer_list_void); \
-  delegator.transfer_list()->slot_queued()    = std::tr1::bind(&transfer_list_void); \
-  delegator.transfer_list()->slot_completed() = std::tr1::bind(&transfer_list_void); \
-  delegator.transfer_list()->slot_corrupt()   = std::tr1::bind(&transfer_list_void);
+  delegator.slot_chunk_find() = std::bind(&find_peer_chunk, std::placeholders::_1, std::placeholders::_2); \
+  delegator.slot_chunk_size() = std::bind(&chunk_index_size, std::placeholders::_1); \
+  delegator.transfer_list()->slot_canceled()  = std::bind(&transfer_list_void); \
+  delegator.transfer_list()->slot_queued()    = std::bind(&transfer_list_void); \
+  delegator.transfer_list()->slot_completed() = std::bind(&transfer_list_void); \
+  delegator.transfer_list()->slot_corrupt()   = std::bind(&transfer_list_void);
 
 // Set bitfield size...
 #define SETUP_PEER_CHUNKS()                                     \

@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <iostream>
-#include <tr1/functional>
+#include <functional>
 #include <torrent/exceptions.h>
 #include <torrent/utils/option_strings.h>
 

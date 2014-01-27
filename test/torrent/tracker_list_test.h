@@ -107,10 +107,10 @@ bool check_has_active_in_group(const torrent::TrackerList* tracker_list, const c
   int failure_counter = 0;                                              \
   int scrape_success_counter = 0;                                       \
   int scrape_failure_counter = 0;                                       \
-  tracker_list.slot_success() = tr1::bind(&increment_value, &success_counter); \
-  tracker_list.slot_failure() = tr1::bind(&increment_value, &failure_counter); \
-  tracker_list.slot_scrape_success() = tr1::bind(&increment_value, &scrape_success_counter); \
-  tracker_list.slot_scrape_failure() = tr1::bind(&increment_value, &scrape_failure_counter);
+  tracker_list.slot_success() = bind(&increment_value, &success_counter); \
+  tracker_list.slot_failure() = bind(&increment_value, &failure_counter); \
+  tracker_list.slot_scrape_success() = bind(&increment_value, &scrape_success_counter); \
+  tracker_list.slot_scrape_failure() = bind(&increment_value, &scrape_failure_counter);
 
 #define TRACKER_INSERT(group, name)                             \
   TrackerTest* name = new TrackerTest(&tracker_list, "");       \

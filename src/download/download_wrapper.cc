@@ -65,7 +65,7 @@
 #define LT_LOG_STORAGE_ERRORS(log_fmt, ...)                             \
   lt_log_print_info(LOG_PROTOCOL_STORAGE_ERRORS, this->info(), "storage_errors", log_fmt, __VA_ARGS__);
 
-namespace tr1 { using namespace std::tr1; }
+
 
 namespace torrent {
 
@@ -76,13 +76,13 @@ DownloadWrapper::DownloadWrapper() :
   m_hashChecker(NULL),
   m_connectionType(0) {
 
-  m_main->delay_download_done().slot() = std::tr1::bind(&download_data::call_download_done, data());
+  m_main->delay_download_done().slot() = std::bind(&download_data::call_download_done, data());
 
   m_main->tracker_list()->set_info(info());
-  m_main->tracker_controller()->slot_success() = tr1::bind(&DownloadWrapper::receive_tracker_success, this, tr1::placeholders::_1);
-  m_main->tracker_controller()->slot_failure() = tr1::bind(&DownloadWrapper::receive_tracker_failed, this, tr1::placeholders::_1);
+  m_main->tracker_controller()->slot_success() = bind(&DownloadWrapper::receive_tracker_success, this, placeholders::_1);
+  m_main->tracker_controller()->slot_failure() = bind(&DownloadWrapper::receive_tracker_failed, this, placeholders::_1);
 
-  m_main->chunk_list()->slot_storage_error() = tr1::bind(&DownloadWrapper::receive_storage_error, this, tr1::placeholders::_1);
+  m_main->chunk_list()->slot_storage_error() = bind(&DownloadWrapper::receive_storage_error, this, placeholders::_1);
 }
 
 DownloadWrapper::~DownloadWrapper() {
@@ -111,8 +111,8 @@ DownloadWrapper::initialize(const std::string& hash, const std::string& id) {
 
   info()->mutable_local_id().assign(id.c_str());
 
-  info()->slot_left()      = tr1::bind(&FileList::left_bytes, m_main->file_list());
-  info()->slot_completed() = tr1::bind(&FileList::completed_bytes, m_main->file_list());
+  info()->slot_left()      = bind(&FileList::left_bytes, m_main->file_list());
+  info()->slot_completed() = bind(&FileList::completed_bytes, m_main->file_list());
 
   file_list()->mutable_data()->mutable_hash().assign(hash.c_str());
 
@@ -125,7 +125,7 @@ DownloadWrapper::initialize(const std::string& hash, const std::string& id) {
   m_hashChecker->slot_check(rak::make_mem_fun(this, &DownloadWrapper::check_chunk_hash));
 //   m_hashChecker->slot_storage_error(rak::make_mem_fun(this, &DownloadWrapper::receive_storage_error));
 
-  m_hashChecker->delay_checked().slot() = std::tr1::bind(&DownloadWrapper::receive_initial_hash, this);
+  m_hashChecker->delay_checked().slot() = std::bind(&DownloadWrapper::receive_initial_hash, this);
 }
 
 void
@@ -241,7 +241,7 @@ DownloadWrapper::check_chunk_hash(ChunkHandle handle) {
   ChunkHandle new_handle = m_main->chunk_list()->get(handle.index(), ChunkList::get_blocking);
   m_main->chunk_list()->release(&handle);
 
-  hash_queue()->push_back(new_handle, data(), tr1::bind(&DownloadWrapper::receive_hash_done, this, tr1::placeholders::_1, tr1::placeholders::_2));
+  hash_queue()->push_back(new_handle, data(), bind(&DownloadWrapper::receive_hash_done, this, placeholders::_1, placeholders::_2));
 }
 
 void

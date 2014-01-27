@@ -60,7 +60,7 @@
 
 #include "manager.h"
 
-namespace tr1 { using namespace std::tr1; }
+
 
 namespace torrent {
 
@@ -84,12 +84,12 @@ Manager::Manager() :
 
   m_hashQueue = new HashQueue(&m_main_thread_disk);
   m_hashQueue->slot_has_work() =
-    tr1::bind(&thread_base::send_event_signal,
+    bind(&thread_base::send_event_signal,
               &m_main_thread_main,
-              m_main_thread_main.signal_bitfield()->add_signal(tr1::bind(&HashQueue::work, m_hashQueue)),
-              tr1::placeholders::_1);
+              m_main_thread_main.signal_bitfield()->add_signal(bind(&HashQueue::work, m_hashQueue)),
+              placeholders::_1);
 
-  m_taskTick.slot() = std::tr1::bind(&Manager::receive_tick, this);
+  m_taskTick.slot() = std::bind(&Manager::receive_tick, this);
 
   priority_queue_insert(&taskScheduler, &m_taskTick, cachedTime.round_seconds());
 

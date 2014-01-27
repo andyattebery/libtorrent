@@ -20,7 +20,7 @@ public:
   torrent::ChunkManager* chunk_manager = new torrent::ChunkManager;     \
   torrent::ChunkList* chunk_list = new torrent::ChunkList;              \
   chunk_list->set_manager(chunk_manager);                               \
-  chunk_list->slot_create_chunk() = tr1::bind(&func_create_chunk, tr1::placeholders::_1, tr1::placeholders::_2); \
+  chunk_list->slot_create_chunk() = bind(&func_create_chunk, placeholders::_1, placeholders::_2); \
   chunk_list->resize(32);
 
 #define CLEANUP_CHUNK_LIST()                    \

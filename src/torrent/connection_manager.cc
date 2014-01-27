@@ -47,7 +47,7 @@
 #include "error.h"
 #include "exceptions.h"
 
-namespace tr1 { using namespace std::tr1; }
+
 
 namespace torrent {
 
@@ -90,11 +90,11 @@ ConnectionManager::ConnectionManager() :
   m_proxyAddress = (new rak::socket_address())->c_sockaddr();
   rak::socket_address::cast_from(m_proxyAddress)->sa_inet()->clear();
 
-  m_slot_resolver = tr1::bind(&resolve_host,
-                              tr1::placeholders::_1,
-                              tr1::placeholders::_2,
-                              tr1::placeholders::_3,
-                              tr1::placeholders::_4);
+  m_slot_resolver = bind(&resolve_host,
+                              placeholders::_1,
+                              placeholders::_2,
+                              placeholders::_3,
+                              placeholders::_4);
 }
 
 ConnectionManager::~ConnectionManager() {
